@@ -3,8 +3,8 @@
 import decimal
 from math import log, floor
 
-from utils import replace, bound, simplify, vectorize, unwrap
-from statistics import mean, median
+from .utils import replace, bound, simplify, vectorize, unwrap
+from .statistics import median
 
 
 def e(exponent):
@@ -38,6 +38,12 @@ SI = {
     -21: 'z',
     -24: 'y',
 }
+
+
+@unwrap
+@vectorize
+def human(value, digits=2):
+    return '{:,}'.format(round(value, digits))
 
 
 @unwrap
