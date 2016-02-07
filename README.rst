@@ -24,6 +24,8 @@ for human-readable numbers still have various flaws:
 notation <https://en.wikipedia.org/wiki/Engineering_notation>`__, for
 producing human-readable numbers.
 
+Install with ``pip install notation`` or ``pip3 install notation``.
+
 What it looks like
 ------------------
 

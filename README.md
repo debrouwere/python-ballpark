@@ -9,6 +9,8 @@ When people think of human-readable numbers, they think of rounding to two decim
 
 `python-notation` introduces _business notation_, an offshoot of [engineering notation](https://en.wikipedia.org/wiki/Engineering_notation), for producing human-readable numbers.
 
+Install with `pip install notation` or `pip3 install notation`.
+
 ### What it looks like
 
 | numbers                        | human readable                     | engineering notation     | **business notation**  |
