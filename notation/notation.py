@@ -97,19 +97,20 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
     e = bound(exponent - exponent % precision, -12, 12)
     prefix = prefixes[e]
 
-    normalized_values = []
+    decimals = []
     for value in values:
         over = int(floor(log(value, 10))) - exponent
-        decimals = min(d - over, d)
-        normalized_values.append(round(value / 10.0 ** e, decimals))
-    
-    # division always produces floats, which we convert to integers
-    # but only if all normalized values are integer-valued (have 
-    # nothing after the decimal point) to keep things consistent
-    normalized_values = simplify(normalized_values)
+        decimals.append(min(d - over, d))
 
     strings = []
-    for value in normalized_values:
-        strings.append('{:,}'.format(value) + prefix)
+    for value, places in zip(values, decimals):
+        normalized = value / 10.0 ** e
+        # use `round` for rounding (beyond the decimal point if necessary)
+        # use string formatting for padding to the right amount of decimals
+        # and to hide decimals when necessary (by default, floats are always
+        # displayed with a single decimal place, to distinguish them from
+        # integers)
+        normalized = round(normalized, places)
+        strings.append('{0:,.{1}f}'.format(normalized, d) + prefix)
 
     return strings

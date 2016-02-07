@@ -14,16 +14,6 @@ def bound(value, lower, upper):
     return max(lower, min(upper, value))
 
 
-def simplify(values):
-    """ Convert a list of floats to ints, but only if all of them
-    are integer-valued. """
-
-    if all([round(value) == value for value in values]):
-        return list(map(int, values))
-    else:
-        return values
-
-
 def unwrap(fn):
     @functools.wraps(fn)
     def unwrapped_function(values, *vargs, **kwargs):
