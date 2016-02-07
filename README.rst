@@ -71,11 +71,11 @@ How it works
    so on instead of scientific exponents like E+03
 -  **prefixes:** a mapping of orders of magnitude to prefixes, e.g.
    ``{-3: 'm', 3: 'K'}``, allowing you to customize the prefixes, for
-   example using B for billion instead of T for tera \*\* **statistic:**
-   a function which returns the reference number that will determine the
-   order of magnitude for the entire group of numbers, so that for
-   example when the reference number is 233K, smaller numbers like 11K
-   won't have any more numbers after the comma and numbers like 1,180K
-   won't jump an order of magnitude to 1.18M; the median often works
-   well, but if you want more precision for small outliers, try
-   ``notation.statistics.Q1`` or even ``min``
+   example using B for billion instead of T for tera
+-  **statistic:** a function which returns the reference number that
+   will determine the order of magnitude for the entire group of
+   numbers, so that for example when the reference number is 233K,
+   smaller numbers like 11K won't have any more numbers after the comma
+   and numbers like 1,180K won't jump an order of magnitude to 1.18M;
+   the median often works well, but if you want more precision for small
+   outliers, try ``notation.statistics.Q1`` or even ``min``
