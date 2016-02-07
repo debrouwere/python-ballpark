@@ -30,8 +30,8 @@ Install with `pip install notation` or `pip3 install notation`.
 >>> B([11234.22, 233000.55, 1175125.2])
 ['11K', '233K', '1,180K']
 >>>
->>> # all notations accept single numbers too, but then we can't
->>> # guarantee that all numbers will have the same prefix (kilo, mega etc.)
+>>> # all notations accept single numbers too, but then we can't guarantee
+>>> # that all numbers will have the same prefix (kilo, mega etc.)
 >>> [B(value) for value in [11234.22, 233000.55, 1175125.2]]
 ['11.2K', '233K', '1.18M']
 ```
