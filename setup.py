@@ -16,7 +16,7 @@ setup(name='notation',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: ISC License',
+        'License :: OSI Approved :: ISC License (ISCL)',
         'Operating System :: OS Independent',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Utilities',        
