@@ -4,8 +4,8 @@ When people think of human-readable numbers, they think of rounding to two decim
 
 * even with a thousands separator, at a glance you might easily mistake a billion for a trillion
 * even when rounding, an amount like 12,214.17 dollars is a lot of number noise for communicating 12.2K
-* scientific notation leads to exponents like `1.22e4` which are hard to interpret because we're used to working with thousands, millions and billions -- orders of magnitudes that are multiples of three
-* when comparing multiple measurements of the same underlying variable, like the yearly sales numbers for 2010-2015, it's annoying to have some numbers in thousands and other numbers in millions -- you want consistency so that digits in the same position are of the same magnitude 
+* scientific notation leads to exponents like `1.22e4` which are hard to interpret because we're used to working with thousands, millions and billions – orders of magnitudes that are multiples of three
+* when comparing multiple measurements of the same underlying variable, like the yearly sales numbers for 2010-2015, it's annoying to have some numbers in thousands and other numbers in millions – you want consistency so that digits in the same position are of the same magnitude 
 
 `python-notation` introduces _business notation_, an offshoot of [engineering notation](https://en.wikipedia.org/wiki/Engineering_notation), for producing human-readable numbers.
 
