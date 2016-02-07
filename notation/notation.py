@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 import decimal
-from math import log, floor
+from math import log, floor, copysign
 
-from .utils import replace, bound, simplify, vectorize, unwrap
+from .utils import replace, bound, vectorize, unwrap
 from .statistics import median
 
 
@@ -93,8 +93,13 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
 
     reference = statistic(values)
     exponent = int(floor(log(reference, 10)))
-    d = precision - exponent % precision - 1
-    e = bound(exponent - exponent % precision, -12, 12)
+    e = bound(exponent - exponent % 3, -12, 12)
+    # the amount of decimals is the precision minus the amount of digits
+    # before the decimal point, which is one more than the relative order
+    # of magnitude (for example, 10^5 can be represented as 100K, with
+    # those three digits representing place values of 10^3, 10^4 and 10^5)
+    d = precision - (1 + exponent - e)
+
     prefix = prefixes[e]
 
     decimals = []
