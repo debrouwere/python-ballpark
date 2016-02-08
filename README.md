@@ -42,7 +42,7 @@ Install with `pip install ballpark` or `pip3 install ballpark`.
 business(values, precision=3, prefix=True, prefixes=SI, statistic=median)
 ```
 
-* **precision:** the amount of significant digits; when necessary, `business` will round beyond the decimal sign as well: in the example above, `1175125.2` was turned into `1,180K` rather than `1,175K` to retain only 3 significant digits
-* **prefix:** whether to use SI prefixes like m (milli), K (kilo) and so on instead of scientific exponents like E+03
-* **prefixes:** a mapping of orders of magnitude to prefixes, e.g. `{-3: 'm', 3: 'K'}`, allowing you to customize the prefixes, for example using B for billion instead of T for tera
-* **statistic:** a function which returns the reference number that will determine the order of magnitude for the entire group of numbers, so that for example when the reference number is 233K, smaller numbers like 11K won't have any more numbers after the comma and numbers like 1,180K won't jump an order of magnitude to 1.18M; the median often works well, but if you want more precision for small outliers, try `ballpark.statistics.Q1` or even Python's builtin `min`
+* **precision:** the amount of significant digits. When necessary, `business` will round beyond the decimal sign as well: in the example above, `1175125.2` was turned into `1,180K` rather than `1,175K` to retain only 3 significant digits.
+* **prefix:** whether to use SI prefixes like m (milli), K (kilo) and so on instead of scientific exponents like E+03.
+* **prefixes:** a mapping of orders of magnitude to prefixes, e.g. `{-3: 'm', 3: 'K'}`, allowing you to customize the prefixes, for example using B for billion instead of T for tera.
+* **statistic:** a function to produce the reference number. The reference number determines the order of magnitude and precision for the entire group of numbers, so that for example when the reference number is 23.3K, smaller numbers like 1.1K won't gain a decimal place and larger numbers like 1,180K won't jump an order of magnitude to 1.18M. The median often works well, but if you want more precision for small outliers, try `ballpark.statistics.Q1` or even Python's builtin `min`.
