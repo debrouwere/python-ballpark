@@ -1,4 +1,4 @@
-Notation
+Ballpark
 ========
 
 When people think of human-readable numbers, they think of rounding to
@@ -19,18 +19,18 @@ for human-readable numbers still have various flaws:
    consistency so that digits in the same position are of the same
    magnitude
 
-``python-notation`` introduces *business notation*, an offshoot of
+``python-ballpark`` introduces *business notation*, an offshoot of
 `engineering
 notation <https://en.wikipedia.org/wiki/Engineering_notation>`__, for
-producing human-readable numbers.
+producing better human-readable numbers.
 
-Install with ``pip install notation`` or ``pip3 install notation``.
+Install with ``pip install ballpark`` or ``pip3 install ballpark``.
 
 What it looks like
 ------------------
 
 +----------------------------------+--------------------------------------+----------------------------+---------------------------+
-| numbers                          | human readable                       | engineering notation       | **business notation**     |
+| numbers                          | rounded                              | engineering notation       | **business notation**     |
 +==================================+======================================+============================+===========================+
 | 11234.22, 233000.55, 1175125.2   | 11,234.22, 233,000.55, 1,175,125.2   | 11.2E+3, 233E+3, 1.18E+6   | 11K, 233K, 1,180K         |
 +----------------------------------+--------------------------------------+----------------------------+---------------------------+
@@ -42,17 +42,17 @@ How to use it
 
 .. code:: python
 
-    >>> from notation import human, scientific, engineering, business
+    >>> from ballpark import human, scientific, engineering, business
     >>> business([11234.22, 233000.55, 1175125.2])
     ['11K', '233K', '1,180K']
     >>>
     >>> # or use the shortcut functions
-    >>> from notation import H, S, E, B
+    >>> from ballpark import H, S, E, B
     >>> B([11234.22, 233000.55, 1175125.2])
     ['11K', '233K', '1,180K']
     >>>
-    >>> # all notations accept single numbers too, but then we can't
-    >>> # guarantee that all numbers will have the same prefix (kilo, mega etc.)
+    >>> # all notations accept single numbers too, but then we can't guarantee
+    >>> # that all numbers will have the same prefix (kilo, mega etc.)
     >>> [B(value) for value in [11234.22, 233000.55, 1175125.2]]
     ['11.2K', '233K', '1.18M']
 
@@ -78,4 +78,5 @@ How it works
    smaller numbers like 11K won't have any more numbers after the comma
    and numbers like 1,180K won't jump an order of magnitude to 1.18M;
    the median often works well, but if you want more precision for small
-   outliers, try ``notation.statistics.Q1`` or even ``min``
+   outliers, try ``ballpark.statistics.Q1`` or even Python's builtin
+   ``min``

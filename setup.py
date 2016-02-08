@@ -1,18 +1,18 @@
 from setuptools import setup, find_packages
 
-setup(name='notation',
+setup(name='ballpark',
     description='Better human-readable numbers.',
     long_description=open('README.rst').read(),
     author='Stijn Debrouwere',
     author_email='stijn@debrouwere.org',
-    url='https://github.com/debrouwere/python-notation/',
-    download_url='https://www.github.com/debrouwere/python-notation/tarball/master',
+    url='https://github.com/debrouwere/python-ballpark/',
+    download_url='https://www.github.com/debrouwere/python-ballpark/tarball/master',
     version='1.1.1',
     license='ISC',
     packages=find_packages(),
     keywords='human numbers format notation scientific engineering',
     install_requires=[],
-    test_suite='notation.tests',
+    test_suite='ballpark.tests',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
