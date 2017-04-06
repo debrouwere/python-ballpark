@@ -1,10 +1,19 @@
 # encoding: utf-8
 
 import decimal
-from math import log, floor, copysign
+from math import copysign, floor, log
 
-from .utils import replace, bound, vectorize, unwrap
 from .statistics import median
+from .utils import bound, replace, unwrap, vectorize
+
+
+def order(value, base=10):
+    if value == 0:
+        return 0
+    else:
+        magnitude = max(abs(value), 1)
+        power = log(magnitude, base)
+        return int(copysign(floor(power), value))
 
 
 def e(exponent):
@@ -17,7 +26,7 @@ def e(exponent):
         return ''
 
 
-# TODO: just have this be an array and then zip this with 
+# TODO: just have this be an array and then zip this with
 # range(-len(SI)//2*3, len(SI)//2*3, 3)
 SI = {
      24: 'Y',
@@ -73,15 +82,15 @@ def engineering(value, precision=3, prefix=False, prefixes=SI):
 @unwrap
 def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
     """
-    Convert a list of numbers to the engineering notation appropriate to a 
-    reference point like the minimum, the median or the mean -- 
+    Convert a list of numbers to the engineering notation appropriate to a
+    reference point like the minimum, the median or the mean --
     think of it as "business notation".
 
-    Any number will have at most the amount of significant digits of the 
-    reference point, that is, the function will round beyond the 
+    Any number will have at most the amount of significant digits of the
+    reference point, that is, the function will round beyond the
     decimal point.
 
-    For example, if the reference is `233K`, this function will turn turn 
+    For example, if the reference is `233K`, this function will turn 
     1,175,125 into `1180K` and 11,234 into `11K` (instead of 1175K and
     11.2K respectively.) This can help enormously with readability.
 
@@ -92,7 +101,7 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
     """
 
     reference = statistic(values)
-    exponent = int(floor(log(reference, 10)))
+    exponent = order(reference)
     e = bound(exponent - exponent % 3, -12, 12)
     # the amount of decimals is the precision minus the amount of digits
     # before the decimal point, which is one more than the relative order
@@ -104,7 +113,7 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
 
     decimals = []
     for value in values:
-        over = int(floor(log(value, 10))) - exponent
+        over = order(value) - exponent
         decimals.append(min(d - over, d))
 
     strings = []
