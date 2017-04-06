@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(name='ballpark',
     description='Better human-readable numbers.',
@@ -7,7 +7,7 @@ setup(name='ballpark',
     author_email='stijn@debrouwere.org',
     url='https://github.com/debrouwere/python-ballpark/',
     download_url='https://www.github.com/debrouwere/python-ballpark/tarball/master',
-    version='1.1.1',
+    version='1.2.0',
     license='ISC',
     packages=find_packages(),
     keywords='human numbers format notation scientific engineering',
@@ -19,7 +19,7 @@ setup(name='ballpark',
         'License :: OSI Approved :: ISC License (ISCL)',
         'Operating System :: OS Independent',
         'Topic :: Scientific/Engineering :: Information Analysis',
-        'Topic :: Utilities',        
+        'Topic :: Utilities',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',

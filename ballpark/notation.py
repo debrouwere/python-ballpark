@@ -4,16 +4,17 @@ import decimal
 from math import copysign, floor, log
 
 from .statistics import median
-from .utils import bound, replace, unwrap, vectorize
+from .utils import bound, isnan, repel, replace, unwrap, vectorize
 
 
 def order(value, base=10):
-    if value == 0:
+    if isnan(value):
+        return None
+    elif value == 0:
         return 0
     else:
-        magnitude = max(abs(value), 1)
-        power = log(magnitude, base)
-        return int(copysign(floor(power), value))
+        power = log(repel(value), base)
+        return int(floor(power))
 
 
 def e(exponent):
@@ -80,7 +81,7 @@ def engineering(value, precision=3, prefix=False, prefixes=SI):
 
 
 @unwrap
-def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
+def business(values, precision=3, prefix=True, prefixes=SI, statistic=median, default=''):
     """
     Convert a list of numbers to the engineering notation appropriate to a
     reference point like the minimum, the median or the mean --
@@ -90,7 +91,7 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
     reference point, that is, the function will round beyond the
     decimal point.
 
-    For example, if the reference is `233K`, this function will turn 
+    For example, if the reference is `233K`, this function will turn
     1,175,125 into `1180K` and 11,234 into `11K` (instead of 1175K and
     11.2K respectively.) This can help enormously with readability.
 
@@ -101,6 +102,10 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
     """
 
     reference = statistic(values)
+
+    if not reference:
+        return [''] * len(values)
+
     exponent = order(reference)
     e = bound(exponent - exponent % 3, -12, 12)
     # the amount of decimals is the precision minus the amount of digits
@@ -111,20 +116,20 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median):
 
     prefix = prefixes[e]
 
-    decimals = []
-    for value in values:
-        over = order(value) - exponent
-        decimals.append(min(d - over, d))
-
     strings = []
-    for value, places in zip(values, decimals):
-        normalized = value / 10.0 ** e
-        # use `round` for rounding (beyond the decimal point if necessary)
-        # use string formatting for padding to the right amount of decimals
-        # and to hide decimals when necessary (by default, floats are always
-        # displayed with a single decimal place, to distinguish them from
-        # integers)
-        normalized = round(normalized, places)
-        strings.append('{0:,.{1}f}'.format(normalized, d) + prefix)
+    for value in values:
+        if isnan(value):
+            strings.append('')
+        else:
+            normalized = value / 10.0 ** e
+            # use `round` for rounding (beyond the decimal point if necessary)
+            # use string formatting for padding to the right amount of decimals
+            # and to hide decimals when necessary (by default, floats are always
+            # displayed with a single decimal place, to distinguish them from
+            # integers)
+            relative_order = order(value) - exponent
+            places = min(d - relative_order, d)
+            normalized = round(normalized, places)
+            strings.append('{0:,.{1}f}'.format(normalized, d) + prefix)
 
     return strings

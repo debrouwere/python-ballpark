@@ -3,18 +3,27 @@
 # included for ease of use with Python 2 (which has no statistics package)
 
 
+from .utils import isnan, reject
+
+
 def mean(values):
+    values = list(reject(isnan, values))
     sigma = float(sum(values))
     n = len(values)
-    return sigma / n
+    if n:
+        return sigma / n
+    else:
+        return None
 
 def quantile(p):
     def bound_quantile(values):
-        values = sorted(values)
+        values = [value for value in sorted(reject(isnan, values))]
         n = len(values)
         ix = int(n * p)
 
-        if n % 2:
+        if not n:
+            return None
+        elif n % 2:
             return values[ix]
         elif ix < 1:
             return values[0]

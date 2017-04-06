@@ -1,7 +1,16 @@
 # encoding: utf-8
 
-import functools
 import collections
+import functools
+import math
+
+
+def isnan(value):
+    return value is None or math.isnan(value)
+
+
+def reject(predicate, values):
+    return filter(lambda value: not predicate(value), values)
 
 
 def replace(string, mapping):
@@ -14,11 +23,15 @@ def bound(value, lower, upper):
     return max(lower, min(upper, value))
 
 
+def repel(value):
+    return math.copysign(max(abs(value), 1e-24), value)
+
+
 def unwrap(fn):
     @functools.wraps(fn)
     def unwrapped_function(values, *vargs, **kwargs):
         scalar = not isinstance(values, collections.Iterable)
-        
+
         if scalar:
             values = [values]
 
