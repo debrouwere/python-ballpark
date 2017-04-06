@@ -20,8 +20,16 @@ missing_cases = [
     ([None, 5, 2, 1, 1, 1, 2, None], ['', '5.00', '2.00', '1.00', '1.00', '1.00', '2.00', '']),
     ]
 
-rows = list(zip(itertools.cycle('AB'), range(10)))
-df = pandas.DataFrame(rows, columns=['category', 'value'])
+datasets = [
+    (
+        pandas.DataFrame(list(zip(itertools.cycle('AB'), range(10))), columns=['category', 'value']),
+        pandas.Series(['0.00', '1.00', '2.00', '3.00', '4.00', '5.00', '6.00', '7.00', '8.00', '9.00']),
+    ),(
+        pandas.DataFrame(list(zip(itertools.cycle('AB'), [1, 1e6, 5, 5e9, 3, 2e8, 4, 4e6])), columns=['category', 'value']).groupby('category'),
+        pandas.Series(['1.00', '1M', '5.00', '5,000M', '3.00', '200M', '4.00', '4M']),
+    )
+
+]
 
 class TestCase(unittest.TestCase):
     def test_notation(self):
@@ -33,7 +41,7 @@ class TestCase(unittest.TestCase):
             self.assertEqual(notation.business(provided), expected)
 
     def test_upcast(self):
-        expected = pandas.Series(['0.00', '1.00', '2.00', '3.00', '4.00', '5.00', '6.00', '7.00', '8.00', '9.00'])
-        actual = notation.business(df.value)
+        for provided, expected in datasets:
+            actual = provided.value.apply(notation.business)
         self.assertEqual(list(actual.index), list(expected.index))
         self.assertEqual(list(actual.values), list(expected.values))
