@@ -46,8 +46,12 @@ How to use it
 
 .. code:: python
 
-    >>> from ballpark import human, scientific, engineering, business
+    >>> from ballpark import human, scientific, engineering, business, ballpark
     >>> business([11234.22, 233000.55, 1175125.2])
+    ['11K', '233K', '1,180K']
+    >>>
+    >>> # business notation is also aliased as `ballpark`
+    >>> ballpark([11234.22, 233000.55, 1175125.2])
     ['11K', '233K', '1,180K']
     >>>
     >>> # or use the shortcut functions
