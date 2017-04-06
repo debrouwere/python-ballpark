@@ -4,13 +4,17 @@
 
 
 def mean(values):
-    return float(sum(values)) / len(values)
+    sigma = float(sum(values))
+    n = len(values)
+    return sigma / n
 
 def quantile(p):
     def bound_quantile(values):
-        ix = int(len(values) * p)
+        values = sorted(values)
+        n = len(values)
+        ix = int(n * p)
 
-        if len(values) % 2:
+        if n % 2:
             return values[ix]
         elif ix < 1:
             return values[0]
