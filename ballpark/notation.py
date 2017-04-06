@@ -27,6 +27,17 @@ def e(exponent):
         return ''
 
 
+def upcast(new, old):
+    try:
+        import pandas
+        if isinstance(old, pandas.Series):
+            return pandas.Series(new, index=old.index)
+        else:
+            return new
+    except ImportError:
+        return new
+
+
 # TODO: just have this be an array and then zip this with
 # range(-len(SI)//2*3, len(SI)//2*3, 3)
 SI = {
@@ -104,7 +115,7 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median, de
     reference = statistic(values)
 
     if not reference:
-        return [''] * len(values)
+        return upcast([''] * len(values), values)
 
     exponent = order(reference)
     e = bound(exponent - exponent % 3, -12, 12)
@@ -132,4 +143,4 @@ def business(values, precision=3, prefix=True, prefixes=SI, statistic=median, de
             normalized = round(normalized, places)
             strings.append('{0:,.{1}f}'.format(normalized, d) + prefix)
 
-    return strings
+    return upcast(strings, values)
