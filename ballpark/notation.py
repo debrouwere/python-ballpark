@@ -4,6 +4,8 @@ import decimal
 from math import copysign, floor, log
 
 from .statistics import median
+from .utils import ceil as _ceil
+from .utils import floor as _floor
 from .utils import bound, isnan, repel, replace, unwrap, vectorize
 
 
@@ -36,6 +38,14 @@ def upcast(new, old):
             return new
     except ImportError:
         return new
+
+
+def extent(values, precision=3, statistic=median):
+    l = min(values)
+    r = max(values)
+    exponent = order(statistic(values))
+    digits = precision - exponent
+    return (_floor(l, digits), _ceil(r, digits))
 
 
 # TODO: just have this be an array and then zip this with
